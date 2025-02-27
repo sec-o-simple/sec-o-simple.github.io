@@ -1,0 +1,38 @@
+# This syncs the GitHub Pages from the repo and presents it at https://sec-o-simple.github.io
+
+name: Sec-O-Simple Website
+
+# Run only on schedule and manually
+on:
+  workflow_dispatch:
+  schedule:
+     - cron:  '37 6 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+      - name: Checkout built GitHub Pages
+        uses: actions/checkout@v4
+        with:
+           repository: sec-o-simple/sec-o-simple
+           ref: gh-pages
+           path: build
+      - name: Remove .git directory to allow further process
+        run: |
+             cd build
+             rm -rf .git
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
