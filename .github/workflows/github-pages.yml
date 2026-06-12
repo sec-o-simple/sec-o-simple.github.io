@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Checkout built GitHub Pages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
            repository: sec-o-simple/sec-o-simple
            ref: gh-pages
@@ -30,7 +30,7 @@ jobs:
              cd build
              rm -rf .git
       - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@v6
         with:
           target_branch: gh-pages
           build_dir: build
